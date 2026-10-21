@@ -1,0 +1,289 @@
+@import 'tailwindcss';
+
+/* SmartResolve AI — design tokens exposed to Tailwind v4.
+   Visual direction: a midnight-navy "signal console" for campus operations.
+   Deep night surfaces, luminous electric-blue/violet/magenta accents, glass
+   panels, and a restrained motion language. Dark-only by design. */
+@theme {
+  /* Surfaces (named "canvas" to avoid colliding with Tailwind's text-base size) */
+  --color-canvas: #070b1a;
+  --color-canvas-2: #0a1024;
+  --color-surface: #0d1530;
+  --color-surface-2: #111b38;
+  --color-surface-3: #17224a;
+  --color-line: #1e2b4d;
+  --color-line-soft: #172140;
+
+  /* Text */
+  --color-fg: #e8eeff;
+  --color-muted: #93a2c6;
+  --color-dim: #64739a;
+
+  /* Accents */
+  --color-blue: #318bff;
+  --color-blue-soft: #1d3a75;
+  --color-violet: #8b5cf6;
+  --color-magenta: #ec4899;
+  --color-teal: #14d9c5;
+  --color-amber: #f59e0b;
+  --color-green: #22c55e;
+  --color-danger: #fb5a78;
+
+  /* Type */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  --text-display: 2.75rem;
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: 2rem;
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: 1.5rem;
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: 1.15rem;
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.01em;
+  --text-eyebrow: 0.72rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.16em;
+
+  /* Shape */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+
+  /* Depth */
+  --shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 24px 48px -28px rgba(0, 0, 0, 0.85);
+  --shadow-glow: 0 0 0 1px rgba(49, 139, 255, 0.35), 0 18px 48px -18px rgba(49, 139, 255, 0.5);
+  --shadow-glow-violet: 0 0 0 1px rgba(139, 92, 246, 0.35), 0 18px 48px -18px rgba(139, 92, 246, 0.5);
+
+  /* Motion primitives (deliberate, reused across the app) */
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+  --animate-spinner: spinner 0.75s linear infinite;
+  --animate-float: float 10s ease-in-out infinite;
+  --animate-drift: drift 26s ease-in-out infinite alternate;
+  --animate-pulse-ring: pulse-ring 2.4s ease-out infinite;
+  --animate-gradient: gradient-pan 9s ease infinite;
+  --animate-stamp-in: stamp-in 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-rise: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -150% 0;
+  }
+  100% {
+    background-position: 250% 0;
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, -3%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-3%, 4%, 0) scale(1.03);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(49, 139, 255, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(49, 139, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(49, 139, 255, 0);
+  }
+}
+
+@keyframes gradient-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes stamp-in {
+  from {
+    opacity: 0;
+    transform: scale(0.72) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-fg font-sans text-base leading-relaxed antialiased;
+    background-image:
+      radial-gradient(1100px 620px at 12% -8%, rgba(49, 139, 255, 0.14), transparent 60%),
+      radial-gradient(900px 560px at 96% 0%, rgba(139, 92, 246, 0.13), transparent 58%),
+      radial-gradient(760px 520px at 78% 108%, rgba(20, 217, 197, 0.08), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-semibold tracking-[-0.015em] text-fg;
+  }
+
+  a {
+    @apply text-blue;
+    text-underline-offset: 3px;
+  }
+
+  ::selection {
+    background: rgba(49, 139, 255, 0.35);
+    color: #fff;
+  }
+
+  /* One consistent, visible keyboard focus treatment everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Slim, dark scrollbars that match the shell. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--color-surface-3);
+    background-clip: padding-box;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Translucent, blurred panel — the primary surface of the console. */
+  .glass {
+    background: linear-gradient(180deg, rgba(17, 27, 56, 0.72), rgba(11, 17, 40, 0.66));
+    border: 1px solid rgba(150, 170, 230, 0.1);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+
+  /* Opaque card used for dense content where blur would cost clarity. */
+  .panel {
+    background: linear-gradient(180deg, rgba(16, 26, 54, 0.92), rgba(10, 16, 38, 0.94));
+    border: 1px solid var(--color-line-soft);
+    box-shadow: var(--shadow-card);
+  }
+
+  .gradient-text {
+    background-image: linear-gradient(100deg, #6cb0ff 0%, #a78bfa 48%, #f472b6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .brand-gradient {
+    background-image: linear-gradient(135deg, #318bff 0%, #8b5cf6 52%, #ec4899 100%);
+  }
+
+  /* Faint technical grid, faded out toward the edges. */
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(120, 145, 220, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120, 145, 220, 0.06) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 72%);
+  }
+
+  /* Hover affordance for interactive cards. */
+  .card-hover {
+    transition:
+      border-color 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .card-hover:hover {
+    border-color: rgba(49, 139, 255, 0.4);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
