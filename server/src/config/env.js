@@ -71,7 +71,7 @@ const env = {
   // Reverse-proxy hops Express should trust when deriving the client IP.
   trustProxy: trustProxyEnv(),
   // Per-client rate limits. Defaults are the documented production values;
-  // see server/.env.example and README "Rate limiting".
+  // see README "Environment" and README "Rate limiting".
   rateLimit: {
     windowMs: intEnv('RATE_LIMIT_WINDOW_MS', 15 * 60 * 1000, { min: 1000 }),
     loginMax: intEnv('RATE_LIMIT_LOGIN_MAX', 10),

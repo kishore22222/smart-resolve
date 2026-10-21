@@ -42,14 +42,16 @@ ENV/
 
 # -----------------------------------------------------------------------------
 # Environment files and secrets
-#   Only *.env.example templates (placeholders only) are tracked.
+#   No .env files of any kind are tracked — not even placeholder templates.
+#   The full list of required variables is documented in README.md
+#   ("Environment"); create .env locally from that table.
 # -----------------------------------------------------------------------------
 .env
 .env.*
-!.env.example
 **/.env
 **/.env.*
-!**/.env.example
+*.env.example
+**/*.env.example
 
 # Local env tooling / dotenv secrets
 .envrc
@@ -163,10 +165,6 @@ $RECYCLE.BIN/
 # they win over the broader patterns above).
 # =============================================================================
 
-# Safe environment templates containing placeholders only.
-!.env.example
-!**/.env.example
-
 # The labeled training dataset. Required to rebuild the classifier at deploy
 # time and to reproduce the reported held-out metrics.
 !ml-service/data/
@@ -191,3 +189,4 @@ $RECYCLE.BIN/
 # a locally recreated .opencode/ would partially re-enter the repository.
 # -----------------------------------------------------------------------------
 .opencode/
+OPENCODE_FRONTEND_DESIGN.md

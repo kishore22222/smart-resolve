@@ -6,7 +6,7 @@ import env from '../config/env.js';
 // construct isolated apps with fresh counters and explicit small limits,
 // without weakening the production defaults.
 //
-// Defaults (env-configurable, see server/.env.example):
+// Defaults (env-configurable, see README "Environment"):
 //   login      10 requests / IP       / RATE_LIMIT_WINDOW_MS (15 min)
 //   register    5 requests / IP       / RATE_LIMIT_WINDOW_MS
 //   general   100 requests / IP       / RATE_LIMIT_WINDOW_MS

@@ -32,9 +32,7 @@ administrator to route, and duplicate detection is skipped.
 .
 ├─ client/         React + Vite single-page app (Tailwind CSS v4)
 ├─ server/         Express REST API (ES Modules)
-├─ ml-service/     Flask + scikit-learn classifier / similarity service
-├─ OPENCODE_FRONTEND_DESIGN.md   UI design plan and rationale
-└─ .opencode/      Skills used while building this project
+└─ ml-service/     Flask + scikit-learn classifier / similarity service
 ```
 
 ## Prerequisites
@@ -63,7 +61,7 @@ python app.py                   # serves http://127.0.0.1:8000
 ```bash
 cd server
 npm install
-copy .env.example .env          # then edit .env (see Environment below)
+# create server/.env with the variables listed under Environment below
 npm run seed                    # optional: create an admin + sample staff
 npm run dev                     # nodemon, serves http://localhost:5000
 ```
@@ -73,7 +71,7 @@ npm run dev                     # nodemon, serves http://localhost:5000
 ```bash
 cd client
 npm install
-copy .env.example .env          # VITE_API_BASE_URL=http://localhost:5000/api
+# create client/.env with: VITE_API_BASE_URL=http://localhost:5000/api
 npm run dev                     # serves http://localhost:5173
 ```
 
@@ -83,17 +81,21 @@ reporter account.
 
 ## Environment
 
-Both `server/.env` and `client/.env` are gitignored; only `*.env.example`
-templates are committed. Do not commit real secrets.
+`server/.env` and `client/.env` are gitignored and are never committed — no
+template files are tracked either. Create them locally from the tables below.
+Do not commit real secrets.
 
-`server/.env` keys (full list in `server/.env.example`):
+`server/.env` keys (all of them):
 
 | Key | Purpose |
 | --- | --- |
+| `NODE_ENV` | `development` or `production`. `production` enables the fail-fast startup checks |
+| `PORT` | Port the API listens on (default `5000`) |
 | `MONGODB_URI` | Local Mongo URI or an Atlas `mongodb+srv://…` string |
 | `JWT_SECRET` | Signing secret for auth tokens — use a long random value |
 | `JWT_EXPIRES_IN` | Token lifetime (e.g. `8h`) |
 | `CORS_ORIGINS` | Comma-separated allowed browser origins |
+| `BCRYPT_ROUNDS` | bcrypt cost factor (default `12`) |
 | `TRUST_PROXY` | `false` (default) or a number of trusted proxy hops — see [Rate limiting](#rate-limiting) |
 | `RATE_LIMIT_WINDOW_MS` | Shared rate-limit window in ms (default `900000` = 15 min) |
 | `RATE_LIMIT_LOGIN_MAX` | Login attempts per IP per window (default `10`) |
@@ -104,6 +106,10 @@ templates are committed. Do not commit real secrets.
 | `ML_TIMEOUT_MS` | Per-call timeout before ML is treated as unavailable |
 | `ML_CONFIDENCE_THRESHOLD` | Below this, an issue is flagged for human review |
 | `DUPLICATE_THRESHOLD` | Minimum cosine similarity to surface a duplicate |
+| `SEED_ADMIN_NAME` | Display name for the seeded admin (seed script only) |
+| `SEED_ADMIN_EMAIL` | Email for the seeded admin (seed script only) |
+| `SEED_ADMIN_PASSWORD` | Password for the seeded admin (seed script only) |
+| `SEED_STAFF_PASSWORD` | Password for seeded staff accounts (seed script only) |
 
 `client/.env`:
 
@@ -149,9 +155,8 @@ Notes:
 - The ML service needs no public ingress; keep it on private
   service-to-service networking if the platform offers it, and allowlist only
   the backend in `CORS_ORIGINS` for browser traffic.
-- Required platform env vars are documented in `server/.env.example` and
-  `client/.env.example` (placeholders only; real values live in the platform's
-  env settings, never in Git).
+- Required platform env vars are documented in the Environment section above
+  (real values live in the platform's env settings, never in Git).
 - Recommended order: MongoDB → ML service → backend (`npm run seed` once to
   provision the first admin) → frontend.
 
@@ -241,7 +246,7 @@ still own it and it has not moved past the initial stage:
 ### Rate limiting
 
 Every limit is enforced server-side with `express-rate-limit` and is
-configurable through the environment (see `server/.env.example`):
+configurable through the environment (see Environment above):
 
 | Limit | Default | Keyed on | Applied to |
 | --- | --- | --- | --- |
@@ -310,8 +315,7 @@ Notes:
 The UI is a "campus work-order ledger": IBM Plex Sans for text, IBM Plex Mono
 for identifiers, a left directory rail (a bottom tab bar on mobile), ledger
 rows rather than a card wall, and a rotated rubber-stamp element for status —
-the one deliberately bold element in an otherwise quiet interface. Full
-rationale and wireframes are in `OPENCODE_FRONTEND_DESIGN.md`.
+the one deliberately bold element in an otherwise quiet interface.
 
 Styling is **Tailwind CSS v4**, wired in through the `@tailwindcss/vite` plugin.
 The design tokens (palette, type scale, radii, shadow, motion) live in one place

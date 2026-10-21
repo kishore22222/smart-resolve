@@ -20,7 +20,8 @@ export default function createApp(options = {}) {
   // actually in front of the app, and only for a known hop count. Blind
   // `trust proxy = true` would let any client spoof its IP and defeat the
   // rate limiters; leaving it false behind a proxy would collapse every
-  // client into the proxy's single bucket. See TRUST_PROXY in .env.example.
+  // client into the proxy's single bucket. See TRUST_PROXY in README
+  // "Environment".
   if (env.trustProxy !== false) app.set('trust proxy', env.trustProxy);
 
   app.use(
