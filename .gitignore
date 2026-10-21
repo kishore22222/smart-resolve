@@ -184,3 +184,10 @@ $RECYCLE.BIN/
 # Model artifacts, if they are ever switched to a committed-artifact workflow:
 # uncomment the next line to track the trained model instead of rebuilding it.
 # !ml-service/artifacts/
+
+# -----------------------------------------------------------------------------
+# Local agent tooling — not part of the project source.
+# Kept last so it wins over the !**/package.json re-inclusion above, otherwise
+# a locally recreated .opencode/ would partially re-enter the repository.
+# -----------------------------------------------------------------------------
+.opencode/
